@@ -19,7 +19,7 @@
   • <a href="#license">License</a>
 </p>
 
-`SecureDefaults` is a wrapper over UserDefaults with an extra [AES256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) encryption layer (key size has **256-bit** length). It encludes:
+`SecureDefaults` is a wrapper over UserDefaults with an extra [AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) encryption layer (key size has **256-bit** length). It encludes:
 - AES-256 encryption
 - Password stretching with PBKDF2
 - Encrypt-then-hash HMAC
