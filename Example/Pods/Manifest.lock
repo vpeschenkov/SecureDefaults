@@ -1,0 +1,16 @@
+PODS:
+  - SecureDefaults (1.0.0)
+
+DEPENDENCIES:
+  - SecureDefaults (from `../`)
+
+EXTERNAL SOURCES:
+  SecureDefaults:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SecureDefaults: 4da26262e41a41c1e4f9d577f5ca36147b40a24c
+
+PODFILE CHECKSUM: 0c88f6a3b94820b9ca6ca078adc6fc94bf5338e2
+
+COCOAPODS: 1.5.3
