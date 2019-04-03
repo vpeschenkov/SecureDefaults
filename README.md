@@ -79,7 +79,7 @@ public func rawObject(forKey defaultName: String) -> Any?
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'SecureDefaults', '1.0.0' // Swift 4.2
+pod 'SecureDefaults', '1.0.0' # Swift 4.2
 ```
 
 ### [Carthage](https://github.com/Carthage/Carthage)
