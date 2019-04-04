@@ -26,9 +26,9 @@
 - Password salting
 - Random IV
 
-By this framework I'm trying to achieve the following things:
+## Purpose
 
-- Avoiding this behavior https://stackoverflow.com/questions/4747404/delete-keychain-items-when-an-app-is-uninstalled. (Yes, there is still a key, but there is no data)
+- Avoiding the following behavior https://stackoverflow.com/questions/4747404/delete-keychain-items-when-an-app-is-uninstalled. (Yes, there is still a key, but there is no data)
 - Avoiding additional thinking about there is a good place to store a particular value. (choice between Keychain and UserDefaults)
 - Improving a situation with security on the iOS platform. Many apps I've seen didn't use `Keychain`. They store all sensitive data in `UserDefaults` (access tokens, passwords, etc)... At least, this can help to make such apps a bit more secured without pain. Perhaps, if this framework is almost the same as `UserDefaults`, developers will star use it?
 - It doesn't look good to keep many simple keys in `Keychain`. That is probably only my opinion but why not 😅?
