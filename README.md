@@ -26,7 +26,7 @@
 - Password salting
 - Random IV
 
-## Purpose
+## Motivation
 
 - Avoiding the following behavior https://stackoverflow.com/questions/4747404/delete-keychain-items-when-an-app-is-uninstalled. (Yes, there is still a key, but there is no data)
 - Avoiding additional thinking about there is a good place to store a particular value. (choice between Keychain and UserDefaults)
