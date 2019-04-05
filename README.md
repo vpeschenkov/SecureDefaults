@@ -47,7 +47,7 @@ It is pretty simple to use `SeccureDefaults` instead of `UserDefaults`. In most 
 Replace the following code:
 
 ```swift
-UserDefaults.standart
+UserDefaults.standard
 ```
 
 by this one:
