@@ -19,7 +19,7 @@
   • <a href="#license">License</a>
 </p>
 
-`SecureDefaults` is a wrapper over UserDefaults with an extra [AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) encryption layer (key size has **256-bit** length). It encludes:
+`SecureDefaults` is a wrapper over `UserDefaults/NSUserDefaults` with an extra [AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) encryption layer (key size has **256-bit** length). It encludes:
 - AES-256 encryption
 - Password stretching with PBKDF2
 - Encrypt-then-hash HMAC
@@ -42,7 +42,7 @@
 
 ## Usage
 
-It is pretty simple to use `SeccureDefaults` instead of `UserDefaults`. In most cases, it is the same thing that is `UserDefaults`. You just need to set a password to make it work.
+It is pretty simple to use `SeccureDefaults` instead of `UserDefaults/NSUserDefaults`. In most cases, it is the same thing that is `UserDefaults`. You just need to set a password to make it work.
 
 Replace the following code:
 

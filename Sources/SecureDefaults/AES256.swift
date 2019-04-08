@@ -63,18 +63,21 @@ struct AES256 {
     private func crypt(input: Data, operation: CCOperation) throws -> Data {
         var outLength = Int(0)
         var outBytes = [UInt8](repeating: 0, count: input.count + kCCBlockSizeAES128)
-        var status: CCCryptorStatus = CCCryptorStatus(kCCSuccess)
-        input.withUnsafeBytes { (encryptedBytes: UnsafePointer<UInt8>!) -> () in
-            IV.withUnsafeBytes { (ivBytes: UnsafePointer<UInt8>!) in
-                key.withUnsafeBytes { (keyBytes: UnsafePointer<UInt8>!) -> () in
+        var status = CCCryptorStatus(kCCSuccess)
+        input.withUnsafeBytes { (inputBuffer: UnsafeRawBufferPointer) in
+            IV.withUnsafeBytes { (IVBuffer: UnsafeRawBufferPointer) in
+                key.withUnsafeBytes { (keyBuffer: UnsafeRawBufferPointer) in
+                    let inputBytes = inputBuffer.baseAddress?.assumingMemoryBound(to: UInt8.self)
+                    let IVBytes = IVBuffer.baseAddress?.assumingMemoryBound(to: UInt8.self)
+                    let keyBytes = keyBuffer.baseAddress?.assumingMemoryBound(to: UInt8.self)
                     status = CCCrypt(
                         operation,
                         CCAlgorithm(kCCAlgorithmAES),
                         CCOptions(kCCOptionPKCS7Padding),
                         keyBytes,
                         key.count,
-                        ivBytes,
-                        encryptedBytes,
+                        IVBytes,
+                        inputBytes,
                         input.count,
                         &outBytes,
                         outBytes.count,
@@ -93,8 +96,10 @@ struct AES256 {
         let length = kCCKeySizeAES256
         var status = Int32(0)
         var derivedBytes = [UInt8](repeating: 0, count: length)
-        password.withUnsafeBytes { (passwordBytes: UnsafePointer<Int8>!) in
-            salt.withUnsafeBytes { (saltBytes: UnsafePointer<UInt8>!) in
+        password.withUnsafeBytes { (passwordBuffer: UnsafeRawBufferPointer) in
+            salt.withUnsafeBytes { (saltBuffer: UnsafeRawBufferPointer) in
+                let passwordBytes = passwordBuffer.baseAddress?.assumingMemoryBound(to: Int8.self)
+                let saltBytes = saltBuffer.baseAddress?.assumingMemoryBound(to: UInt8.self)
                 status = CCKeyDerivationPBKDF(
                     CCPBKDFAlgorithm(kCCPBKDF2),
                     passwordBytes,
@@ -124,8 +129,11 @@ struct AES256 {
     
     static func randomData(length: Int) -> Data {
         var data = Data(count: length)
-        let status = data.withUnsafeMutableBytes { mutableBytes in
-            SecRandomCopyBytes(kSecRandomDefault, length, mutableBytes)
+        let status = data.withUnsafeMutableBytes { buffer -> Int32 in
+            if let bytes = buffer.baseAddress?.assumingMemoryBound(to: UInt8.self) {
+                return SecRandomCopyBytes(kSecRandomDefault, length, bytes)
+            }
+            return -1
         }
         assert(status == Int32(0))
         return data
