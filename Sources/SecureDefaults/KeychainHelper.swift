@@ -69,7 +69,7 @@ final class KeychainHelper {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccessible as String: accessible,
             kSecAttrAccount as String: key,
-            kSecReturnData as String: kCFBooleanTrue as! CFString,
+            kSecReturnData as String: kCFBooleanTrue as Any,
             kSecMatchLimit as String: kSecMatchLimitOne
         ] as [String : Any]
         if let group = group {
