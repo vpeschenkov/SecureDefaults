@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SecureDefaults'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'SecureDefaults is a wrapper over UserDefaults with an extra AES256 encryption layer (key size has 256-bit length)'
   s.homepage         = 'https://github.com/vpeschenkov/SecureDefaults'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }

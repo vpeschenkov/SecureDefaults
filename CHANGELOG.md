@@ -9,5 +9,9 @@
 ```
 
 # 1.0.1
-### Added
+### Added:
 - Swift 5 support
+
+# 1.0.2
+### Fixed:
+- Crash with `kCFBooleanTrue`
