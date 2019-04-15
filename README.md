@@ -1,12 +1,11 @@
 # SecureDefaults for iOS, macOS
 
-[![Build Status](https://travis-ci.com/vpeschenkov/SecureDefaults.svg?token=HrZYyqqJZx2172zxUQSb&branch=master)](https://travis-ci.com/vpeschenkov/SecureDefaults)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-blue.svg)](https://github.com/Carthage/Carthage)
-[![Version](https://img.shields.io/cocoapods/v/SecureDefaults.svg?style=flat)](https://cocoapods.org/pods/SecureDefaults)
-[![License](https://img.shields.io/cocoapods/l/SecureDefaults.svg?style=flat)](https://cocoapods.org/pods/SecureDefaults)
+[![Build Status](https://travis-ci.com/vpeschenkov/SecureDefaults.svg?token=HrZYyqqJZx2172zxUQSb&branch=master&style=flat)](https://travis-ci.com/vpeschenkov/SecureDefaults)
 [![Platform](https://img.shields.io/cocoapods/p/SecureDefaults.svg?style=flat)](https://cocoapods.org/pods/SecureDefaults)
-
-> The design and strength of all key lengths of the AES algorithm (i.e., 128, 192 and 256) are sufficient to protect classified information up to the SECRET level. TOP SECRET information will require use of either the 192 or 256 key lengths. The implementation of AES in products intended to protect national security systems and/or information must be reviewed and certified by NSA prior to their acquisition and use. <sup>[\[1\]](https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development)</sup>
+[![Version](https://img.shields.io/cocoapods/v/SecureDefaults.svg?style=flat)](https://cocoapods.org/pods/SecureDefaults)
+[![Carthage compatible](https://img.shields.io/badge/carthage-compatible-blue.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Swift Package Manager compatible](https://img.shields.io/badge/swift%20package%20manager-compatible-brightgreen.svg?style=flat)](https://github.com/apple/swift-package-manager)
+[![License](https://img.shields.io/cocoapods/l/SecureDefaults.svg?style=flat)](https://cocoapods.org/pods/SecureDefaults)
 
 <p align="center">
     <a href="#requirements">Requirements</a>
@@ -26,10 +25,12 @@
 - Password salting
 - Random IV
 
+> The design and strength of all key lengths of the AES algorithm (i.e., 128, 192 and 256) are sufficient to protect classified information up to the SECRET level. TOP SECRET information will require use of either the 192 or 256 key lengths. The implementation of AES in products intended to protect national security systems and/or information must be reviewed and certified by NSA prior to their acquisition and use. <sup>[\[1\]](https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development)</sup>
+
 ## Motivation
 
 - Avoiding the following behavior https://stackoverflow.com/questions/4747404/delete-keychain-items-when-an-app-is-uninstalled. (Yes, there is still a key, but there is no data)
-- Avoiding additional thinking about there is a good place to store a particular value. (choice between Keychain and UserDefaults)
+- Avoiding additional thinking about there is a good place to store a particular value. (choice between Keychain and `UserDefaults`)
 - Improving a situation with security on the iOS platform. Many apps I've seen didn't use `Keychain`. They store all sensitive data in `UserDefaults` (access tokens, passwords, etc)... At least, this can help to make such apps a bit more secured without pain. Perhaps, if this framework is almost the same as `UserDefaults`, maybe developers will start using it?
 - It doesn't look good to keep many simple keys in `Keychain`.
 
