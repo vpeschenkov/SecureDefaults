@@ -10,8 +10,12 @@
 
 # 1.0.1
 ### Added:
-- Swift 5 support
+- Added Swift 5 support
 
 # 1.0.2
 ### Fixed:
 - Crash with `kCFBooleanTrue`
+
+# 1.0.3
+### Added
+- Added `setRawObject(_:forKey)`

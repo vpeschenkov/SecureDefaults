@@ -3,6 +3,25 @@ import SecureDefaults
 
 class Tests: XCTestCase {
     
+    func testString() {
+        let key = "test.key.string"
+        let value = "Just a test message"
+        let defaults = SecureDefaults()
+        defaults.password = "test.password"
+        defaults.set(value, forKey: key)
+        defaults.synchronize()
+        XCTAssertEqual(defaults.string(forKey: key), value)
+    }
+    
+    func testRawObject() {
+        let key = "test.key.string"
+        let value = "Just a test message"
+        let defaults = SecureDefaults()
+        defaults.setRawObject(value, forKey: key)
+        defaults.synchronize()
+        XCTAssertEqual(defaults.rawObject(forKey: key) as? String, value)
+    }
+    
     func testEncryption() {
         let key = "test.key.string"
         let value = "Just a test message"
@@ -12,16 +31,6 @@ class Tests: XCTestCase {
         defaults.synchronize()
         XCTAssertTrue((defaults.rawObject(forKey: key) as? Data != nil))
         XCTAssertTrue((defaults.rawObject(forKey: key) as? String == nil))
-    }
-    
-    func testString() {
-        let key = "test.key.string"
-        let value = "Just a test message"
-        let defaults = SecureDefaults()
-        defaults.password = "test.password"
-        defaults.set(value, forKey: key)
-        defaults.synchronize()
-        XCTAssertEqual(defaults.string(forKey: key), value)
     }
     
     func testStringWithWrongPassword() {

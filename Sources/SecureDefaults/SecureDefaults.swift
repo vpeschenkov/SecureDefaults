@@ -134,6 +134,10 @@ public class SecureDefaults: UserDefaults {
         return super.object(forKey: defaultName)
     }
     
+    public func setRawObject(_ value: Any?, forKey defaultName: String) {
+        super.set(value, forKey: defaultName)
+    }
+    
     public override func object(forKey defaultName: String) -> Any? {
         return secretObject(forKey: defaultName)
     }
