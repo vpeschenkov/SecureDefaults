@@ -87,7 +87,7 @@ public func rawObject(forKey defaultName: String) -> Any?
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'SecureDefaults', '1.0.3' # Swift 5.0
+pod 'SecureDefaults', '1.0.4' # Swift 5.0
 pod 'SecureDefaults', '1.0.0' # Swift 4.2
 ```
 
@@ -96,7 +96,7 @@ pod 'SecureDefaults', '1.0.0' # Swift 4.2
 Add this to `Cartfile`
 
 ```ruby
-github "vpeschenkov/SecureDefaults" == 1.0.3 # Swift 5.0
+github "vpeschenkov/SecureDefaults" == 1.0.4 # Swift 5.0
 github "vpeschenkov/SecureDefaults" == 1.0.0 # Swift 4.2
 ```
 
@@ -116,7 +116,7 @@ import PackageDescription
 let package = Package(
   name: "YourProject",
   dependencies: [
-    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.0.3")
+    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.0.4")
   ],
   targets: [
     .target(name: "YourProject", dependencies: ["SecureDefaults"])
@@ -148,4 +148,4 @@ Victor Peschenkov, v.peschenkov@gmail.com
 
 ## License
 
-`SecureDefaults` is available under the MIT license. See the [LICENSE.md](LICENSE.md) file for more info.
+`SecureDefaults` is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
