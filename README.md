@@ -87,7 +87,7 @@ public func rawObject(forKey defaultName: String) -> Any?
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'SecureDefaults', '1.0.4' # Swift 5.0
+pod 'SecureDefaults', '1.0.5' # Swift 5.0
 pod 'SecureDefaults', '1.0.0' # Swift 4.2
 ```
 
@@ -96,7 +96,7 @@ pod 'SecureDefaults', '1.0.0' # Swift 4.2
 Add this to `Cartfile`
 
 ```ruby
-github "vpeschenkov/SecureDefaults" == 1.0.4 # Swift 5.0
+github "vpeschenkov/SecureDefaults" == 1.0.5 # Swift 5.0
 github "vpeschenkov/SecureDefaults" == 1.0.0 # Swift 4.2
 ```
 

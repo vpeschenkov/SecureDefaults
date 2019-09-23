@@ -1,5 +1,5 @@
 PODS:
-  - SecureDefaults (1.0.4)
+  - SecureDefaults (1.0.5)
 
 DEPENDENCIES:
   - SecureDefaults (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SecureDefaults: 1eda918884e49355855faa6fde382745d50184c6
+  SecureDefaults: 82e50401f9c0ead33d088d26ad6270183c130720
 
 PODFILE CHECKSUM: 0c88f6a3b94820b9ca6ca078adc6fc94bf5338e2
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.1
