@@ -1,4 +1,4 @@
 osx_image: xcode11
 language: swift
 script:
-- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/SecureDefaults.xcworkspace -scheme Examples -sdk iphonesimulator12.2 | xcpretty
+- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/SecureDefaults.xcworkspace -scheme Examples -destination "platform=iOS Simulator,OS=13.0,name=iPhone 8"
