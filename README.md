@@ -43,7 +43,7 @@
 
 ## Usage
 
-It is pretty simple to use `SeccureDefaults` instead of `UserDefaults/NSUserDefaults`. In most cases, it is the same thing that is `UserDefaults`. You just need to set a password to make it work.
+It is pretty simple to use `SecureDefaults` instead of `UserDefaults/NSUserDefaults`. In most cases, it is the same thing that is `UserDefaults`. You just need to set a password to make it work.
 
 Replace the following code:
 
