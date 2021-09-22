@@ -211,11 +211,11 @@ public class SecureDefaults: UserDefaults {
     private var suitename: String?
     
     private lazy var decrypter = {
-        return try! AES256(key: self.key, iv: self.IV)
+        return try? AES256(key: self.key, iv: self.IV)
     }()
     
     private lazy var encrypter = {
-        return try! AES256(key: self.key, iv: self.IV)
+        return try? AES256(key: self.key, iv: self.IV)
     }()
     
     private var _key: Data? {
@@ -261,7 +261,7 @@ public class SecureDefaults: UserDefaults {
     private func secretObject(forKey defaultName: String) -> Any? {
         let object = super.object(forKey: defaultName)
         if let object = object {
-            let decrypted = try! decrypter.decrypt(object as! Data)
+            guard let decrypted = try? decrypter?.decrypt(object as! Data) else { return nil }
             let data = NSKeyedUnarchiver.unarchiveObject(with: decrypted)
             return data
         }
@@ -271,7 +271,7 @@ public class SecureDefaults: UserDefaults {
     private func setSecret(_ value: Any?, forKey defaultName: String) {
         if let value = value {
             let data = NSKeyedArchiver.archivedData(withRootObject: value)
-            super.set(try! encrypter.encrypt(data), forKey: defaultName)
+            super.set(try? encrypter?.encrypt(data), forKey: defaultName)
             return
         }
         super.set(nil, forKey: defaultName)
