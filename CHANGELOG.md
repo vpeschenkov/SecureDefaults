@@ -20,6 +20,6 @@
 ### Added
 - Added `setRawObject(_:forKey)`
 
-# 1.0.6
+# 1.0.7
 ### Fixed
 - Crash with `fatal error: 'try!' expression unexpectedly raised`
