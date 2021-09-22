@@ -116,7 +116,7 @@ import PackageDescription
 let package = Package(
   name: "YourProject",
   dependencies: [
-    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.0.7")
+    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.0.6")
   ],
   targets: [
     .target(name: "YourProject", dependencies: ["SecureDefaults"])
