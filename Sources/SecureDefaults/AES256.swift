@@ -89,7 +89,7 @@ struct AES256 {
         guard status == kCCSuccess else {
             throw Error.cryptoFailed(status: status)
         }
-        return Data(bytes: UnsafePointer<UInt8>(outBytes), count: outLength)
+        return Data(bytes: outBytes, count: outLength)
     }
     
     static func createKey(password: Data, salt: Data) throws -> Data {
@@ -116,7 +116,7 @@ struct AES256 {
         guard status == 0 else {
             throw Error.keyGeneration(status: Int(status))
         }
-        return Data(bytes: UnsafePointer<UInt8>(derivedBytes), count: length)
+        return Data(bytes: derivedBytes, count: length)
     }
     
     static func randomIV() -> Data {
