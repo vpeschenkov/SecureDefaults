@@ -1,7 +1,7 @@
 {
   "name": "SecureDefaults",
-  "version": "1.0.5",
-  "summary": "SecureDefaults is a wrapper over UserDefaults with an extra AES256 encryption layer (key size has 256-bit length)",
+  "version": "1.0.7",
+  "summary": "A lightweight wrapper over UserDefaults/NSUserDefaults with an extra AES-256 encryption layer",
   "homepage": "https://github.com/vpeschenkov/SecureDefaults",
   "license": {
     "type": "MIT",
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/vpeschenkov/SecureDefaults.git",
-    "tag": "1.0.5"
+    "tag": "1.0.7"
   },
   "swift_versions": "5.0",
   "social_media_url": "https://twitter.com/vpeschenkov",
