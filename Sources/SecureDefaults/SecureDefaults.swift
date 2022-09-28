@@ -260,8 +260,8 @@ public class SecureDefaults: UserDefaults {
     
     private func secretObject(forKey defaultName: String) -> Any? {
         let object = super.object(forKey: defaultName)
-        if let object = object {
-            guard let decrypted = try? decrypter?.decrypt(object as! Data) else { return nil }
+        if let object = object as? Data {
+            guard let decrypted = try? decrypter?.decrypt(object) else { return nil }
             let data = NSKeyedUnarchiver.unarchiveObject(with: decrypted)
             return data
         }
