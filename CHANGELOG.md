@@ -23,3 +23,11 @@
 # 1.0.6
 ### Fixed
 - Crash with `fatal error: 'try!' expression unexpectedly raised`
+
+# 1.0.7
+### Fixed
+Removed UnsafePointer warning
+
+# 1.1.0
+### Fixed
+- Fix force type casting crash
