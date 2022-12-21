@@ -29,10 +29,10 @@
 
 ## Motivation
 
-- Avoiding the following behavior https://stackoverflow.com/questions/4747404/delete-keychain-items-when-an-app-is-uninstalled. (Yes, there is still a key, but there is no data)
-- Avoiding additional thinking about there is a good place to store a particular value. (choice between Keychain and `UserDefaults`)
-- Improving a situation with security on the iOS platform. Many apps I've seen didn't use `Keychain`. They store all sensitive data in `UserDefaults` (access tokens, passwords, etc)... At least, this can help to make such apps a bit more secured without pain. Perhaps, if this framework is almost the same as `UserDefaults`, maybe developers will start using it?
-- It doesn't look good to keep many simple keys in `Keychain`.
+- Avoiding the behavior of leaving keychain items behind when an app is uninstalled (although there may still be a key present, there is no data associated with it)
+- Avoiding the decision-making process of determining the best location to store a particular value (Keychain vs. UserDefaults)
+- Improving security on the iOS platform by encouraging the use of Keychain for storing sensitive data (such as access tokens and passwords) rather than using UserDefaults
+- Avoiding the practice of storing many simple keys in Keychain, as this may not be the most effective use of the tool.
 
 ## Requirements
 
