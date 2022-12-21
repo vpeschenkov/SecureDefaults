@@ -55,9 +55,9 @@ by this one:
 
 ```swift
 let defaults = SecureDefaults.shared
-// Ensures that a password was not set before. Otherwise, if 
-// you set a password one more time, it will re-generate a key. 
-// That means that we lose old data as well.
+// Ensures that a password has not already been set. 
+// Setting a password multiple times will cause the key to be regenerated, 
+// resulting in the loss of any previously encrypted data.
 if !defaults.isKeyCreated {
     defaults.password = NSUUID().uuidString // Or any password you wish
 }
