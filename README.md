@@ -66,7 +66,7 @@ if !defaults.isKeyCreated {
 To use the app and keychain groups:
 
 ```swift
-let defaults = SecureDefaults(suitName: "app.group") // Sets a shared app group
+let defaults = SecureDefaults(suiteName: "app.group") // Sets a shared app group
 defaults.keychainAccessGroup = "keychain.group" // Sets a shrared keychain group 
 if !defaults.isKeyCreated {
     defaults.password = NSUUID().uuidString // Or any password you wish
