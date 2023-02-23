@@ -68,7 +68,7 @@ public class SecureDefaults: UserDefaults {
     }
     
     /**
-     A `key` to use within encrypting and decrypting. The key is regenerated for each `suitName` and stored
+     A `key` to use within encrypting and decrypting. The key is regenerated for each `suiteName` and stored
      in Keychain as \(Keys.AESKey)-\(suitename).
      
      - Note: You are able to make you own key and set it by using this property.
@@ -106,7 +106,7 @@ public class SecureDefaults: UserDefaults {
     }
     
     /**
-     A `IV` to use within encrypting and decrypting. The key is regenerated for each `suitName` and stored
+     A `IV` to use within encrypting and decrypting. The key is regenerated for each `suiteName` and stored
      in Keychain as \(Keys.AESIV)-\(suitename).
      
      - Note: You are able to make you own `iv` and set it by using this property.
