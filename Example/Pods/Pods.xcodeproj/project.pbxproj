@@ -509,6 +509,36 @@
 			};
 			name = Release;
 		};
+		84A31AB7A666C8AEF37AECEF5686C211 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F9A1F659EDEC6A5A6B5AA83B2443AC95 /* SecureDefaults.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SecureDefaults/SecureDefaults-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SecureDefaults/SecureDefaults-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SecureDefaults/SecureDefaults.modulemap";
+				PRODUCT_MODULE_NAME = SecureDefaults;
+				PRODUCT_NAME = SecureDefaults;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		922BE53E502DFC5F0C7305D6E9042A9D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0279EA7C1B7B331DEFE2B0E4DC8EE055 /* Pods-ExamplesTests.debug.xcconfig */;
@@ -606,37 +636,6 @@
 			};
 			name = Debug;
 		};
-		E0EEE836E97128C7BCACCAFCE5E9F58F /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7754C26B4BD9E35B5EEE4CE4B381FB76 /* SecureDefaults.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SecureDefaults/SecureDefaults-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SecureDefaults/SecureDefaults-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SecureDefaults/SecureDefaults.modulemap";
-				PRODUCT_MODULE_NAME = SecureDefaults;
-				PRODUCT_NAME = SecureDefaults;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		E4D0D44B090D4284607EBBC4E71A96C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -703,9 +702,9 @@
 			};
 			name = Debug;
 		};
-		F0D188D271005B042F50591B41F96BDA /* Debug */ = {
+		EC1A57BD6D2C7662399BE547D89E9641 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F9A1F659EDEC6A5A6B5AA83B2443AC95 /* SecureDefaults.debug.xcconfig */;
+			baseConfigurationReference = 7754C26B4BD9E35B5EEE4CE4B381FB76 /* SecureDefaults.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -718,7 +717,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SecureDefaults/SecureDefaults-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SecureDefaults/SecureDefaults-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SecureDefaults/SecureDefaults.modulemap";
 				PRODUCT_MODULE_NAME = SecureDefaults;
@@ -728,10 +727,11 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -766,8 +766,8 @@
 		CE521B3AF08A1792F5CB1A2C744D17F2 /* Build configuration list for PBXNativeTarget "SecureDefaults" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F0D188D271005B042F50591B41F96BDA /* Debug */,
-				E0EEE836E97128C7BCACCAFCE5E9F58F /* Release */,
+				84A31AB7A666C8AEF37AECEF5686C211 /* Debug */,
+				EC1A57BD6D2C7662399BE547D89E9641 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

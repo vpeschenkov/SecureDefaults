@@ -13,16 +13,17 @@ import SecureDefaults
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-        ) -> Bool {
+    ) -> Bool {
         // To get some security in your app just replace `NSUserDefaults` by `SecureDefaults` and set a password 😎.
         let defaults = SecureDefaults()
         if !defaults.isKeyCreated {
             defaults.password = UUID().uuidString
         }
+        defaults.keychainAccessible = kSecAttrAccessibleAlwaysThisDeviceOnly as String
         defaults.set("Thank you for using SecureDefaults!", forKey: "secure.greeting")
         defaults.synchronize()
         

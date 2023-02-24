@@ -62,8 +62,17 @@ public class SecureDefaults: UserDefaults {
         didSet {
             let AESKey = suitename != nil ? "\(Keys.AESKey)-\(suitename!)" : Keys.AESKey
             let AESIVKey = suitename != nil ? "\(Keys.AESIV)-\(suitename!)" : Keys.AESIV
-            KeychainHelper.remove(forKey: AESIVKey, accessible: keychainAccessible)
-            KeychainHelper.remove(forKey: AESKey, accessible: keychainAccessible)
+            let clearKeychain = { (AESIVKey: String, AESKey: String, accessible: String) in
+                KeychainHelper.remove(forKey: AESIVKey, accessible: accessible)
+                KeychainHelper.remove(forKey: AESKey, accessible: accessible)
+            }
+            clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleWhenUnlocked as String)
+            clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleAfterFirstUnlock as String)
+            clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleAlways as String)
+            clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly as String)
+            clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleWhenUnlockedThisDeviceOnly as String)
+            clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly as String)
+            clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleAlwaysThisDeviceOnly as String)
         }
     }
     
