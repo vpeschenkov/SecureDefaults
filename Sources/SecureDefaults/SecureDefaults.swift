@@ -48,7 +48,7 @@ public class SecureDefaults: UserDefaults {
      
      - SeeAlso: https://developer.apple.com/documentation/security/ksecattraccessible
      */
-    public var keychainAccessible: String = kSecAttrAccessibleAlways as String
+    public var keychainAccessible: String = kSecAttrAccessibleAfterFirstUnlock as String
     
     /**
      A key whose value is a string indicating the access group an item is in.
@@ -260,17 +260,27 @@ public class SecureDefaults: UserDefaults {
     
     private func secretObject(forKey defaultName: String) -> Any? {
         let object = super.object(forKey: defaultName)
-        if let object = object as? Data {
-            guard let decrypted = try? decrypter?.decrypt(object) else { return nil }
-            let data = NSKeyedUnarchiver.unarchiveObject(with: decrypted)
-            return data
+        guard let object = object as? Data,
+              let decrypted = try? decrypter?.decrypt(object),
+              let data = try? NSKeyedUnarchiver.unarchivedObject(ofClasses:
+                                                                    [
+                                                                        NSString.self,
+                                                                        NSData.self,
+                                                                        NSURL.self,
+                                                                    ],
+                                                                 from: decrypted) else {
+            // TODO: Add some logging or fatal error?
+            return nil
         }
-        return object
+        return data
     }
-    
+
     private func setSecret(_ value: Any?, forKey defaultName: String) {
         if let value = value {
-            let data = NSKeyedArchiver.archivedData(withRootObject: value)
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: true) else {
+                // TODO: Add some logging or fatal error?
+                return
+            }
             super.set(try? encrypter?.encrypt(data), forKey: defaultName)
             return
         }
