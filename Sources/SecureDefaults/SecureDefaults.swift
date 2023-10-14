@@ -221,7 +221,7 @@ public class SecureDefaults: UserDefaults {
     private var _key: Data? {
         get {
             let key = suitename != nil ? "\(Keys.AESKey)-\(suitename!)" : Keys.AESKey
-            return KeychainHelper.get(
+            return SecureDefaults.get(
                 forKey: key,
                 group: keychainAccessGroup,
                 accessible: keychainAccessible
@@ -229,7 +229,7 @@ public class SecureDefaults: UserDefaults {
         }
         set {
             let key = suitename != nil ? "\(Keys.AESKey)-\(suitename!)" : Keys.AESKey
-            KeychainHelper.set(
+            SecureDefaults.set(
                 newValue as Data?,
                 forKey: key,
                 group: keychainAccessGroup,
@@ -241,7 +241,7 @@ public class SecureDefaults: UserDefaults {
     private var _IV: Data? {
         get {
             let key = suitename != nil ? "\(Keys.AESIV)-\(suitename!)" : Keys.AESIV
-            return KeychainHelper.get(
+            return SecureDefaults.get(
                 forKey: key,
                 group: keychainAccessGroup,
                 accessible: keychainAccessible
@@ -249,7 +249,7 @@ public class SecureDefaults: UserDefaults {
         }
         set {
             let key = suitename != nil ? "\(Keys.AESIV)-\(suitename!)" : Keys.AESIV
-            KeychainHelper.set(
+            SecureDefaults.set(
                 newValue as Data?,
                 forKey: key,
                 group: keychainAccessGroup,
@@ -285,5 +285,79 @@ public class SecureDefaults: UserDefaults {
             return
         }
         super.set(nil, forKey: defaultName)
+    }
+
+    @discardableResult
+    private static func set(
+        _ data: Data?,
+        forKey key: String,
+        group: String?,
+        accessible: String
+        ) -> Bool {
+            guard !KeychainHelper.set(
+                data,
+                forKey: key,
+                group: group,
+                accessible: accessible
+            ) else {
+                return true
+            }
+
+            // Set failed so check if the label and data already exist with the old access attribute
+            let kSecAttrAccessibleAlways = "dk"
+
+            if let result = KeychainHelper.get(
+                forKey: key,
+                group: group,
+                accessible: kSecAttrAccessibleAlways
+            ) as Data? {
+                // Remove the old data at the existing label (but different access attribute) then try again
+                KeychainHelper.remove(forKey: key, accessible: kSecAttrAccessibleAlways)
+                return KeychainHelper.set(
+                    data,
+                    forKey: key,
+                    group: group,
+                    accessible: accessible
+                )
+            }
+
+            return false
+        }
+
+    @discardableResult
+    private static func get(
+        forKey key: String,
+        group: String?,
+        accessible: String
+        ) -> Data? {
+            if let result = KeychainHelper.get(
+                forKey: key,
+                group: group,
+                accessible: accessible
+            ) as Data? {
+                return result
+            }
+
+            let kSecAttrAccessibleAlways = "dk"
+
+            if let result = KeychainHelper.get(
+                forKey: key,
+                group: group,
+                accessible: kSecAttrAccessibleAlways
+            ) as Data? {
+                // Migrate the data.
+                // Remove the old data at the existing label (but different access attribute)
+                // then save using the same label (but new access attribute) then return the result.
+                KeychainHelper.remove(forKey: key, accessible: kSecAttrAccessibleAlways)
+                KeychainHelper.set(
+                    result,
+                    forKey: key,
+                    group: group,
+                    accessible: accessible
+                )
+                return result
+            }
+
+            return nil
     }
 }
