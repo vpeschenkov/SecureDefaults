@@ -35,7 +35,7 @@ import CommonCrypto
 @objc(PVSecureDefaults)
 public class SecureDefaults: UserDefaults {
     
-    private enum Keys {
+    internal enum Keys {
         static let AESIV = "SecureDefaults.AESIV"
         static let AESKey = "SecureDefaults.AESKey"
     }
@@ -306,11 +306,11 @@ public class SecureDefaults: UserDefaults {
             // Set failed so check if the label and data already exist with the old access attribute
             let kSecAttrAccessibleAlways = "dk"
 
-            if let result = KeychainHelper.get(
+            if (KeychainHelper.get(
                 forKey: key,
                 group: group,
                 accessible: kSecAttrAccessibleAlways
-            ) as Data? {
+            ) as Data?) != nil {
                 // Remove the old data at the existing label (but different access attribute) then try again
                 KeychainHelper.remove(forKey: key, accessible: kSecAttrAccessibleAlways)
                 return KeychainHelper.set(
