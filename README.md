@@ -36,10 +36,8 @@
 
 ## Requirements
 
-- iOS 8.0+
-- macOS 10.11+
-- Xcode 10.1+
-- Swift 4.2+
+- iOS 12+
+- Swift 5+
 
 ## Usage
 
@@ -113,7 +111,7 @@ import PackageDescription
 let package = Package(
   name: "YourProject",
   dependencies: [
-    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.1.0")
+    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.2.0")
   ],
   targets: [
     .target(name: "YourProject", dependencies: ["SecureDefaults"])
