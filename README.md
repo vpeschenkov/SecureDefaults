@@ -9,17 +9,6 @@
 [![Swift Package Manager compatible](https://img.shields.io/badge/swift%20package%20manager-compatible-brightgreen.svg?style=flat)](https://github.com/apple/swift-package-manager)
 [![License](https://img.shields.io/cocoapods/l/SecureDefaults.svg?style=flat)](https://cocoapods.org/pods/SecureDefaults)
 
-<p align="center">
-    <a href="#requirements">Requirements</a>
-  • <a href="#usage">Usage</a>
-  • <a href="#installation">Installation</a>
-  • <a href="#contributing">Contributing</a>
-  • <a href="#acknowledgmentsn">Acknowledgments</a>
-  • <a href="#contributing">Contributing</a>
-  • <a href="#author">Author</a>
-  • <a href="#license">License</a>
-</p>
-
 `SecureDefaults` is a wrapper over `UserDefaults/NSUserDefaults` with an extra [AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) encryption layer (key size has **256-bit** length). It encludes:
 - AES-256 encryption
 - Password stretching with PBKDF2
@@ -29,12 +18,14 @@
 
 > The design and strength of all key lengths of the AES algorithm (i.e., 128, 192 and 256) are sufficient to protect classified information up to the SECRET level. TOP SECRET information will require use of either the 192 or 256 key lengths. The implementation of AES in products intended to protect national security systems and/or information must be reviewed and certified by NSA prior to their acquisition and use. <sup>[\[1\]](https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development)</sup>
 
-## Motivation
-
-- Avoiding the behavior of leaving keychain items behind when an app is uninstalled (although there may still be a key present, there is no data associated with it)
-- Avoiding the decision-making process of determining the best location to store a particular value (Keychain vs. UserDefaults)
-- Improving security on the iOS platform by encouraging the use of Keychain for storing sensitive data (such as access tokens and passwords) rather than using UserDefaults
-- Avoiding the practice of storing many simple keys in Keychain, as this may not be the most effective use of the tool.
+# Table of Contents
+- [Requirements](#requirements)
+- [Usage](#usage)
+- [Installation](#installation)
+- [Acknowledgments](#acknowledgments)
+- [Contributing](#contributing)
+- [Author](#author)
+- [License](#license)
 
 ## Requirements
 
