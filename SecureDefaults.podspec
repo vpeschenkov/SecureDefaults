@@ -9,6 +9,6 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
   s.social_media_url = 'https://twitter.com/vpeschenkov'
   s.ios.deployment_target = '12.0'
-  s.osx.deployment_target = '10.11'
+  s.osx.deployment_target = '10.15'
   s.source_files = 'Sources/SecureDefaults/**/*'
 end
