@@ -98,15 +98,73 @@ final class SecureDefaultsTests: XCTestCase {
         XCTAssertEqual(defaults.bool(forKey: key), value)
     }
 
-    static var allTests = [
-        ("testString", testString),
-        ("testRawObject", testRawObject),
-        ("testEncryption", testEncryption),
-        ("testStringWithWrongPassword", testStringWithWrongPassword),
-        ("testURL", testURL),
-        ("testInteger", testInteger),
-        ("testFloat", testFloat),
-        ("testDouble", testDouble),
-        ("testBool", testBool)
-    ]
+
+    func testKeychainAccessibleAlwaysMigrationOnRead() {
+        let key = "test.key.keychainAccessibleAlwaysMigration"
+        let value = "Just a test message"
+        let password = "test.password"
+        let kSecAttrAccessibleAlways = "dk"
+
+        cleanupKeychain()
+
+        // Save data using deprecated default accessible attribute
+        let defaultsSecAttrAccessibleAlways = SecureDefaults()
+        defaultsSecAttrAccessibleAlways.keychainAccessible = kSecAttrAccessibleAlways
+        if !defaultsSecAttrAccessibleAlways.isKeyCreated {
+            defaultsSecAttrAccessibleAlways.password = password
+        }
+        defaultsSecAttrAccessibleAlways.set(value, forKey: key)
+        defaultsSecAttrAccessibleAlways.synchronize()
+        XCTAssertEqual(defaultsSecAttrAccessibleAlways.string(forKey: key), value)
+
+        // Read data using default accessible attribute
+        let defaults = SecureDefaults()
+        if !defaults.isKeyCreated {
+            defaults.password = password
+        }
+        XCTAssertEqual(defaults.string(forKey: key), value)
+
+        // Clean up (remove keys from the keychain)
+        cleanupKeychain()
+    }
+
+    func testKeychainAccessibleAlwaysMigrationOnWrite() {
+        let key = "test.key.keychainAccessibleAlwaysMigration"
+        let value = "Just a test message"
+        let newValue = "Just a new test message"
+        let password = "test.password"
+        let kSecAttrAccessibleAlways = "dk"
+
+        cleanupKeychain()
+
+        // Save data using deprecated default accessible attribute
+        let defaultsSecAttrAccessibleAlways = SecureDefaults()
+        defaultsSecAttrAccessibleAlways.keychainAccessible = kSecAttrAccessibleAlways
+        if !defaultsSecAttrAccessibleAlways.isKeyCreated {
+            defaultsSecAttrAccessibleAlways.password = password
+        }
+        defaultsSecAttrAccessibleAlways.set(value, forKey: key)
+        defaultsSecAttrAccessibleAlways.synchronize()
+        XCTAssertEqual(defaultsSecAttrAccessibleAlways.string(forKey: key), value)
+
+        // Save data using default accessible attribute
+        let defaults = SecureDefaults()
+        if !defaults.isKeyCreated {
+            defaults.password = password
+        }
+        defaults.set(newValue, forKey: key)
+        defaults.synchronize()
+        XCTAssertEqual(defaults.string(forKey: key), newValue)
+
+        // Clean up (remove keys from the keychain)
+        cleanupKeychain()
+    }
+
+    func cleanupKeychain() {
+        let kSecAttrAccessibleAlways = "dk"
+        KeychainHelper.remove(forKey: SecureDefaults.Keys.AESKey, accessible: kSecAttrAccessibleAlways)
+        KeychainHelper.remove(forKey: SecureDefaults.Keys.AESKey, accessible: kSecAttrAccessibleAfterFirstUnlock as String)
+        KeychainHelper.remove(forKey: SecureDefaults.Keys.AESIV, accessible: kSecAttrAccessibleAlways)
+        KeychainHelper.remove(forKey: SecureDefaults.Keys.AESIV, accessible: kSecAttrAccessibleAfterFirstUnlock as String)
+    }
 }
