@@ -36,8 +36,8 @@ import CommonCrypto
 public class SecureDefaults: UserDefaults {
     
     internal enum Keys {
-        static let AESIV = "SecureDefaults.AESIV"
-        static let AESKey = "SecureDefaults.AESKey"
+        static let AESIV = "SecureDefaults.v1.2.2.AESIV"
+        static let AESKey = "SecureDefaults.v1.2.2.AESKey"
     }
     
     /** Use this instead of `NSUserDefaults.standard` */

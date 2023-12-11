@@ -78,7 +78,7 @@ public func rawObject(forKey defaultName: String) -> Any?
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'SecureDefaults', '1.2.1' # Swift 5.0
+pod 'SecureDefaults', '1.2.2' # Swift 5.0
 ```
 
 ### [Carthage](https://github.com/Carthage/Carthage)
@@ -86,7 +86,7 @@ pod 'SecureDefaults', '1.2.1' # Swift 5.0
 Add this to `Cartfile`
 
 ```ruby
-github "vpeschenkov/SecureDefaults" == 1.2.1
+github "vpeschenkov/SecureDefaults" == 1.2.2
 ```
 
 ```sh
@@ -104,7 +104,7 @@ import PackageDescription
 let package = Package(
   name: "YourProject",
   dependencies: [
-    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.2.1")
+    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.2.2")
   ],
   targets: [
     .target(name: "YourProject", dependencies: ["SecureDefaults"])
