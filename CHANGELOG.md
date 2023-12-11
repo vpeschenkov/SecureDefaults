@@ -8,6 +8,10 @@
 ### Fixed for any bug fixes.
 ```
 
+# 1.2.1
+### Fixed:
+- Fixed NSKeyedUnarchiver error unarchiving object with different class that String, Data, URL
+
 # 1.2.0
 ### Fixed:
 - Xcode15 support and warnings

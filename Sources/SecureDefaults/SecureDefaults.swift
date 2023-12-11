@@ -262,13 +262,7 @@ public class SecureDefaults: UserDefaults {
         let object = super.object(forKey: defaultName)
         guard let object = object as? Data,
               let decrypted = try? decrypter?.decrypt(object),
-              let data = try? NSKeyedUnarchiver.unarchivedObject(ofClasses:
-                                                                    [
-                                                                        NSString.self,
-                                                                        NSData.self,
-                                                                        NSURL.self,
-                                                                    ],
-                                                                 from: decrypted) else {
+              let data = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decrypted) else {
             // TODO: Add some logging or fatal error?
             return nil
         }
