@@ -23,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !defaults.isKeyCreated {
             defaults.password = UUID().uuidString
         }
-        defaults.keychainAccessible = kSecAttrAccessibleAlwaysThisDeviceOnly as String
         defaults.set("Thank you for using SecureDefaults!", forKey: "secure.greeting")
         defaults.synchronize()
         

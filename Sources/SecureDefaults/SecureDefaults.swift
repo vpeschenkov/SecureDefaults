@@ -68,11 +68,9 @@ public class SecureDefaults: UserDefaults {
             }
             clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleWhenUnlocked as String)
             clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleAfterFirstUnlock as String)
-            clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleAlways as String)
             clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly as String)
             clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleWhenUnlockedThisDeviceOnly as String)
             clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly as String)
-            clearKeychain(AESIVKey, AESKey, kSecAttrAccessibleAlwaysThisDeviceOnly as String)
         }
     }
     
