@@ -270,7 +270,6 @@ public class SecureDefaults: UserDefaults {
         guard let object = object as? Data,
               let decrypted = try? decrypter?.decrypt(object),
               let data = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decrypted) else {
-            // TODO: Add some logging or fatal error?
             return nil
         }
         return data
@@ -279,7 +278,6 @@ public class SecureDefaults: UserDefaults {
     private func setSecret(_ value: Any?, forKey defaultName: String) {
         if let value = value {
             guard let data = try? NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: true) else {
-                // TODO: Add some logging or fatal error?
                 return
             }
             super.set(try? encrypter?.encrypt(data), forKey: defaultName)
