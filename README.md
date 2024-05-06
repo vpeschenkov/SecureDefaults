@@ -1,22 +1,13 @@
 # SecureDefaults for iOS, macOS
 
+![](.resources/header.png)
+
 [![Build Status](https://travis-ci.com/vpeschenkov/SecureDefaults.svg?token=HrZYyqqJZx2172zxUQSb&branch=master&style=flat)](https://travis-ci.com/vpeschenkov/SecureDefaults)
 [![Platform](https://img.shields.io/cocoapods/p/SecureDefaults.svg?style=flat)](https://cocoapods.org/pods/SecureDefaults)
 [![Version](https://img.shields.io/cocoapods/v/SecureDefaults.svg?style=flat)](https://cocoapods.org/pods/SecureDefaults)
 [![Carthage compatible](https://img.shields.io/badge/carthage-compatible-blue.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Swift Package Manager compatible](https://img.shields.io/badge/swift%20package%20manager-compatible-brightgreen.svg?style=flat)](https://github.com/apple/swift-package-manager)
 [![License](https://img.shields.io/cocoapods/l/SecureDefaults.svg?style=flat)](https://cocoapods.org/pods/SecureDefaults)
-
-<p align="center">
-    <a href="#requirements">Requirements</a>
-  • <a href="#usage">Usage</a>
-  • <a href="#installation">Installation</a>
-  • <a href="#contributing">Contributing</a>
-  • <a href="#acknowledgmentsn">Acknowledgments</a>
-  • <a href="#contributing">Contributing</a>
-  • <a href="#author">Author</a>
-  • <a href="#license">License</a>
-</p>
 
 `SecureDefaults` is a wrapper over `UserDefaults/NSUserDefaults` with an extra [AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) encryption layer (key size has **256-bit** length). It encludes:
 - AES-256 encryption
@@ -27,19 +18,19 @@
 
 > The design and strength of all key lengths of the AES algorithm (i.e., 128, 192 and 256) are sufficient to protect classified information up to the SECRET level. TOP SECRET information will require use of either the 192 or 256 key lengths. The implementation of AES in products intended to protect national security systems and/or information must be reviewed and certified by NSA prior to their acquisition and use. <sup>[\[1\]](https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development)</sup>
 
-## Motivation
-
-- Avoiding the behavior of leaving keychain items behind when an app is uninstalled (although there may still be a key present, there is no data associated with it)
-- Avoiding the decision-making process of determining the best location to store a particular value (Keychain vs. UserDefaults)
-- Improving security on the iOS platform by encouraging the use of Keychain for storing sensitive data (such as access tokens and passwords) rather than using UserDefaults
-- Avoiding the practice of storing many simple keys in Keychain, as this may not be the most effective use of the tool.
+# Table of Contents
+- [Requirements](#requirements)
+- [Usage](#usage)
+- [Installation](#installation)
+- [Acknowledgments](#acknowledgments)
+- [Contributing](#contributing)
+- [Author](#author)
+- [License](#license)
 
 ## Requirements
 
-- iOS 8.0+
-- macOS 10.11+
-- Xcode 10.1+
-- Swift 4.2+
+- iOS 12+
+- Swift 5+
 
 ## Usage
 
@@ -87,7 +78,7 @@ public func rawObject(forKey defaultName: String) -> Any?
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'SecureDefaults', '1.1.0' # Swift 5.0
+pod 'SecureDefaults', '1.2.2' # Swift 5.0
 ```
 
 ### [Carthage](https://github.com/Carthage/Carthage)
@@ -95,7 +86,7 @@ pod 'SecureDefaults', '1.1.0' # Swift 5.0
 Add this to `Cartfile`
 
 ```ruby
-github "vpeschenkov/SecureDefaults" == 1.1.0
+github "vpeschenkov/SecureDefaults" == 1.2.2
 ```
 
 ```sh
@@ -113,7 +104,7 @@ import PackageDescription
 let package = Package(
   name: "YourProject",
   dependencies: [
-    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.1.0")
+    .package(url: "https://github.com/vpeschenkov/SecureDefaults", "1.2.2")
   ],
   targets: [
     .target(name: "YourProject", dependencies: ["SecureDefaults"])

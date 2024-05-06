@@ -35,9 +35,9 @@ import CommonCrypto
 @objc(PVSecureDefaults)
 public class SecureDefaults: UserDefaults {
     
-    private enum Keys {
-        static let AESIV = "SecureDefaults.AESIV"
-        static let AESKey = "SecureDefaults.AESKey"
+    internal enum Keys {
+        static let AESIV = "SecureDefaults.v1.2.2.AESIV"
+        static let AESKey = "SecureDefaults.v1.2.2.AESKey"
     }
     
     /** Use this instead of `NSUserDefaults.standard` */
@@ -48,7 +48,7 @@ public class SecureDefaults: UserDefaults {
      
      - SeeAlso: https://developer.apple.com/documentation/security/ksecattraccessible
      */
-    public var keychainAccessible: String = kSecAttrAccessibleAlways as String
+    public var keychainAccessible: String = kSecAttrAccessibleAfterFirstUnlock as String
     
     /**
      A key whose value is a string indicating the access group an item is in.
@@ -77,7 +77,7 @@ public class SecureDefaults: UserDefaults {
     }
     
     /**
-     A `key` to use within encrypting and decrypting. The key is regenerated for each `suitName` and stored
+     A `key` to use within encrypting and decrypting. The key is regenerated for each `suiteName` and stored
      in Keychain as \(Keys.AESKey)-\(suitename).
      
      - Note: You are able to make you own key and set it by using this property.
@@ -115,7 +115,7 @@ public class SecureDefaults: UserDefaults {
     }
     
     /**
-     A `IV` to use within encrypting and decrypting. The key is regenerated for each `suitName` and stored
+     A `IV` to use within encrypting and decrypting. The key is regenerated for each `suiteName` and stored
      in Keychain as \(Keys.AESIV)-\(suitename).
      
      - Note: You are able to make you own `iv` and set it by using this property.
@@ -230,7 +230,7 @@ public class SecureDefaults: UserDefaults {
     private var _key: Data? {
         get {
             let key = suitename != nil ? "\(Keys.AESKey)-\(suitename!)" : Keys.AESKey
-            return KeychainHelper.get(
+            return SecureDefaults.get(
                 forKey: key,
                 group: keychainAccessGroup,
                 accessible: keychainAccessible
@@ -238,7 +238,7 @@ public class SecureDefaults: UserDefaults {
         }
         set {
             let key = suitename != nil ? "\(Keys.AESKey)-\(suitename!)" : Keys.AESKey
-            KeychainHelper.set(
+            SecureDefaults.set(
                 newValue as Data?,
                 forKey: key,
                 group: keychainAccessGroup,
@@ -250,7 +250,7 @@ public class SecureDefaults: UserDefaults {
     private var _IV: Data? {
         get {
             let key = suitename != nil ? "\(Keys.AESIV)-\(suitename!)" : Keys.AESIV
-            return KeychainHelper.get(
+            return SecureDefaults.get(
                 forKey: key,
                 group: keychainAccessGroup,
                 accessible: keychainAccessible
@@ -258,7 +258,7 @@ public class SecureDefaults: UserDefaults {
         }
         set {
             let key = suitename != nil ? "\(Keys.AESIV)-\(suitename!)" : Keys.AESIV
-            KeychainHelper.set(
+            SecureDefaults.set(
                 newValue as Data?,
                 forKey: key,
                 group: keychainAccessGroup,
@@ -269,20 +269,98 @@ public class SecureDefaults: UserDefaults {
     
     private func secretObject(forKey defaultName: String) -> Any? {
         let object = super.object(forKey: defaultName)
-        if let object = object as? Data {
-            guard let decrypted = try? decrypter?.decrypt(object) else { return nil }
-            let data = NSKeyedUnarchiver.unarchiveObject(with: decrypted)
-            return data
+        guard let object = object as? Data,
+              let decrypted = try? decrypter?.decrypt(object),
+              let data = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decrypted) else {
+            // TODO: Add some logging or fatal error?
+            return nil
         }
-        return object
+        return data
     }
-    
+
     private func setSecret(_ value: Any?, forKey defaultName: String) {
         if let value = value {
-            let data = NSKeyedArchiver.archivedData(withRootObject: value)
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: true) else {
+                // TODO: Add some logging or fatal error?
+                return
+            }
             super.set(try? encrypter?.encrypt(data), forKey: defaultName)
             return
         }
         super.set(nil, forKey: defaultName)
+    }
+
+    @discardableResult
+    private static func set(
+        _ data: Data?,
+        forKey key: String,
+        group: String?,
+        accessible: String
+        ) -> Bool {
+            guard !KeychainHelper.set(
+                data,
+                forKey: key,
+                group: group,
+                accessible: accessible
+            ) else {
+                return true
+            }
+
+            // Set failed so check if the label and data already exist with the old access attribute
+            let kSecAttrAccessibleAlways = "dk"
+
+            if (KeychainHelper.get(
+                forKey: key,
+                group: group,
+                accessible: kSecAttrAccessibleAlways
+            ) as Data?) != nil {
+                // Remove the old data at the existing label (but different access attribute) then try again
+                KeychainHelper.remove(forKey: key, accessible: kSecAttrAccessibleAlways)
+                return KeychainHelper.set(
+                    data,
+                    forKey: key,
+                    group: group,
+                    accessible: accessible
+                )
+            }
+
+            return false
+        }
+
+    @discardableResult
+    private static func get(
+        forKey key: String,
+        group: String?,
+        accessible: String
+        ) -> Data? {
+            if let result = KeychainHelper.get(
+                forKey: key,
+                group: group,
+                accessible: accessible
+            ) as Data? {
+                return result
+            }
+
+            let kSecAttrAccessibleAlways = "dk"
+
+            if let result = KeychainHelper.get(
+                forKey: key,
+                group: group,
+                accessible: kSecAttrAccessibleAlways
+            ) as Data? {
+                // Migrate the data.
+                // Remove the old data at the existing label (but different access attribute)
+                // then save using the same label (but new access attribute) then return the result.
+                KeychainHelper.remove(forKey: key, accessible: kSecAttrAccessibleAlways)
+                KeychainHelper.set(
+                    result,
+                    forKey: key,
+                    group: group,
+                    accessible: accessible
+                )
+                return result
+            }
+
+            return nil
     }
 }
