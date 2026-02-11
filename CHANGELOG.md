@@ -8,6 +8,12 @@
 ### Fixed for any bug fixes.
 ```
 
+# 1.2.3
+### Fixed:
+- Replaced deprecated `NSKeyedUnarchiver.unarchiveTopLevelObjectWithData` with modern secure unarchiving API.
+- Added regression coverage for custom `NSSecureCoding` objects to preserve backward-compatible encrypted storage behavior.
+- Updated Example test target deployment settings to remove XCTest linker warnings on modern Xcode.
+
 # 1.2.2
 ### Fixed:
 - Fixed crash between versions

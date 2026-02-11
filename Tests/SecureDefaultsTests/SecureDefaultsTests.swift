@@ -1,8 +1,29 @@
 import XCTest
 @testable import SecureDefaults
 
+@objc(PVSecureCodableObject)
+private final class SecureCodableObject: NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool { true }
+    let message: String
+    let counter: Int
+    init(message: String, counter: Int) {
+        self.message = message
+        self.counter = counter
+    }
+    required init?(coder: NSCoder) {
+        guard let message = coder.decodeObject(of: NSString.self, forKey: "message") as String? else {
+            return nil
+        }
+        self.message = message
+        self.counter = coder.decodeInteger(forKey: "counter")
+    }
+    func encode(with coder: NSCoder) {
+        coder.encode(message as NSString, forKey: "message")
+        coder.encode(counter, forKey: "counter")
+    }
+}
+
 final class SecureDefaultsTests: XCTestCase {
-    
     func testString() {
         let key = "test.key.string"
         let value = "Just a test message"
@@ -12,7 +33,6 @@ final class SecureDefaultsTests: XCTestCase {
         defaults.synchronize()
         XCTAssertEqual(defaults.string(forKey: key), value)
     }
-    
     func testRawObject() {
         let key = "test.key.string"
         let value = "Just a test message"
@@ -21,7 +41,6 @@ final class SecureDefaultsTests: XCTestCase {
         defaults.synchronize()
         XCTAssertEqual(defaults.rawObject(forKey: key) as? String, value)
     }
-    
     func testEncryption() {
         let key = "test.key.string"
         let value = "Just a test message"
@@ -32,7 +51,6 @@ final class SecureDefaultsTests: XCTestCase {
         XCTAssertTrue((defaults.rawObject(forKey: key) as? Data != nil))
         XCTAssertTrue((defaults.rawObject(forKey: key) as? String == nil))
     }
-    
     func testStringWithWrongPassword() {
         // Prepare data
         let key = "test.key.string"
@@ -47,7 +65,6 @@ final class SecureDefaultsTests: XCTestCase {
         wrongDefaults.password = "test.wrong.password"
         XCTAssertNotEqual(wrongDefaults.string(forKey: key), value)
     }
-    
     func testURL() {
         let key = "test.key.url"
         let value = URL(string: "https://github.com/vpeschenkov/SecureDefaults")!
@@ -57,7 +74,6 @@ final class SecureDefaultsTests: XCTestCase {
         defaults.synchronize()
         XCTAssertEqual(defaults.url(forKey: key), value)
     }
-    
     func testInteger() {
         let key = "test.key.integer"
         let value = Int(10)
@@ -67,7 +83,6 @@ final class SecureDefaultsTests: XCTestCase {
         defaults.synchronize()
         XCTAssertEqual(defaults.integer(forKey: key), value)
     }
-    
     func testFloat() {
         let key = "test.key.float"
         let value = Float(10.0)
@@ -77,7 +92,6 @@ final class SecureDefaultsTests: XCTestCase {
         defaults.synchronize()
         XCTAssertEqual(defaults.float(forKey: key), value)
     }
-    
     func testDouble() {
         let key = "test.key.double"
         let value = Double(10.0)
@@ -87,7 +101,6 @@ final class SecureDefaultsTests: XCTestCase {
         defaults.synchronize()
         XCTAssertEqual(defaults.double(forKey: key), value)
     }
-    
     func testBool() {
         let key = "test.key.bool"
         let value = true
@@ -97,16 +110,24 @@ final class SecureDefaultsTests: XCTestCase {
         defaults.synchronize()
         XCTAssertEqual(defaults.bool(forKey: key), value)
     }
-
-
+    func testCustomSecureCodingObject() {
+        let key = "test.key.custom.secure.coding.object"
+        let value = SecureCodableObject(message: "hello", counter: 42)
+        let defaults = SecureDefaults()
+        defaults.password = "test.password"
+        defaults.set(value, forKey: key)
+        defaults.synchronize()
+        // ---
+        let loaded = defaults.object(forKey: key) as? SecureCodableObject
+        XCTAssertEqual(loaded?.message, value.message)
+        XCTAssertEqual(loaded?.counter, value.counter)
+    }
     func testKeychainAccessibleAlwaysMigrationOnRead() {
         let key = "test.key.keychainAccessibleAlwaysMigration"
         let value = "Just a test message"
         let password = "test.password"
         let kSecAttrAccessibleAlways = "dk"
-
         cleanupKeychain()
-
         // Save data using deprecated default accessible attribute
         let defaultsSecAttrAccessibleAlways = SecureDefaults()
         defaultsSecAttrAccessibleAlways.keychainAccessible = kSecAttrAccessibleAlways
@@ -116,27 +137,22 @@ final class SecureDefaultsTests: XCTestCase {
         defaultsSecAttrAccessibleAlways.set(value, forKey: key)
         defaultsSecAttrAccessibleAlways.synchronize()
         XCTAssertEqual(defaultsSecAttrAccessibleAlways.string(forKey: key), value)
-
         // Read data using default accessible attribute
         let defaults = SecureDefaults()
         if !defaults.isKeyCreated {
             defaults.password = password
         }
         XCTAssertEqual(defaults.string(forKey: key), value)
-
         // Clean up (remove keys from the keychain)
         cleanupKeychain()
     }
-
     func testKeychainAccessibleAlwaysMigrationOnWrite() {
         let key = "test.key.keychainAccessibleAlwaysMigration"
         let value = "Just a test message"
         let newValue = "Just a new test message"
         let password = "test.password"
         let kSecAttrAccessibleAlways = "dk"
-
         cleanupKeychain()
-
         // Save data using deprecated default accessible attribute
         let defaultsSecAttrAccessibleAlways = SecureDefaults()
         defaultsSecAttrAccessibleAlways.keychainAccessible = kSecAttrAccessibleAlways
@@ -146,7 +162,6 @@ final class SecureDefaultsTests: XCTestCase {
         defaultsSecAttrAccessibleAlways.set(value, forKey: key)
         defaultsSecAttrAccessibleAlways.synchronize()
         XCTAssertEqual(defaultsSecAttrAccessibleAlways.string(forKey: key), value)
-
         // Save data using default accessible attribute
         let defaults = SecureDefaults()
         if !defaults.isKeyCreated {
@@ -155,7 +170,6 @@ final class SecureDefaultsTests: XCTestCase {
         defaults.set(newValue, forKey: key)
         defaults.synchronize()
         XCTAssertEqual(defaults.string(forKey: key), newValue)
-
         // Clean up (remove keys from the keychain)
         cleanupKeychain()
     }
